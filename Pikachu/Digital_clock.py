@@ -37,6 +37,6 @@ color_button.pack(side=TOP)
 
 # Clock at the center of the tkinter window
 label.pack(anchor='center')
-time()  # function calling
+time()      # function calling
 
 digital_clock.mainloop()
