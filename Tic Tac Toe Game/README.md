@@ -1,11 +1,11 @@
-# 🎮✨ Tic Tac Toe Game in Python
+# 🎮✨ Tic Tac Toe Game Using Python
 
 A simple Tic Tac Toe (X-O) Game implemented in Python with:
 
   - 🖥 Console-based version (`main.py`)
   - 🖱 Graphical User Interface (GUI) version (`gui.py`) using Tkinter
 
-Developed by Ujjwal Kamila
+Developed by Ujjwal Kamila 
 
 -----
 
