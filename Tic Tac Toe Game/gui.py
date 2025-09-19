@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
-import main  
+from main import TicTacToe  # Import the OOP class
+
 
 class TicTacToeGUI:
     def __init__(self, root):
@@ -9,10 +10,8 @@ class TicTacToeGUI:
         self.root.configure(bg="#1e1e2f")
         self.root.resizable(False, False)
 
-        # Game States
-        self.xState = [0] * 9
-        self.zState = [0] * 9
-        self.turn = 1  # 1 for X, 0 for O
+        # Game Logic
+        self.game = TicTacToe()
 
         # Scoreboard
         self.score_x = 0
@@ -59,15 +58,19 @@ class TicTacToeGUI:
 
     def handle_click(self, index):
         if self.buttons[index]["text"] == "":
-            if self.turn == 1:  # X turn
+            move_ok = self.game.play_turn(index)
+
+            if not move_ok:
+                messagebox.showwarning("⚠️ Invalid Move", "That spot is already taken!")
+                return
+
+            if self.game.turn == 0:  # Last move was X
                 self.buttons[index].config(text="X", fg="#ff5555")
-                self.xState[index] = 1
-            else:  # O turn
+            else:  # Last move was O
                 self.buttons[index].config(text="O", fg="#55aaff")
-                self.zState[index] = 1
 
             # Check Win
-            result = main.checkWin(self.xState, self.zState)
+            result = self.game.checkWin()
             if result == 1:
                 self.score_x += 1
                 messagebox.showinfo("🎉 Winner", "Player X Wins! 🎉")
@@ -84,15 +87,10 @@ class TicTacToeGUI:
                 self.reset_board(update_score=True)
                 return
 
-            # Change Turn
-            self.turn = 1 - self.turn
-
     def reset_board(self, update_score=False):
         for btn in self.buttons:
             btn.config(text="", bg="#2e2e44")
-        self.xState = [0] * 9
-        self.zState = [0] * 9
-        self.turn = 1
+        self.game = TicTacToe()
         if update_score:
             self.score_label.config(text=self.get_score_text())
 
