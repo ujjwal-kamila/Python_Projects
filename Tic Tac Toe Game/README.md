@@ -82,15 +82,13 @@ python gui.py
 |___|___|___|
 ```
 
-### GUI Version
+### 🎨 GUI Version
 
+✨ Modern Tkinter UI with buttons, colors, and a scoreboard (X, O, Draws).
 
 ![GUI Screenshot](./images/tic_tac_toe.png)
 
 
-### GUI Version
-
-✨ Modern Tkinter UI with buttons, colors, and a scoreboard (X, O, Draws).
 
 -----
 
