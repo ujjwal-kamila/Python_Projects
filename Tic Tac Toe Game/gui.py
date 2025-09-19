@@ -1,17 +1,17 @@
 import tkinter as tk
 from tkinter import messagebox
-from main import TicTacToe  # Import the OOP class
-
-
+import main  
 class TicTacToeGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("✨ Tic Tac Toe 🎮 | By Ujjwal Kamila ✨")
+        self.root.title(" Tic Tac Toe 🎮 | By Ujjwal Kamila ✨")
         self.root.configure(bg="#1e1e2f")
         self.root.resizable(False, False)
 
-        # Game Logic
-        self.game = TicTacToe()
+        # Game States
+        self.xState = [0] * 9
+        self.zState = [0] * 9
+        self.turn = 1  # 1 for X, 0 for O
 
         # Scoreboard
         self.score_x = 0
@@ -58,19 +58,15 @@ class TicTacToeGUI:
 
     def handle_click(self, index):
         if self.buttons[index]["text"] == "":
-            move_ok = self.game.play_turn(index)
-
-            if not move_ok:
-                messagebox.showwarning("⚠️ Invalid Move", "That spot is already taken!")
-                return
-
-            if self.game.turn == 0:  # Last move was X
+            if self.turn == 1:  # X turn
                 self.buttons[index].config(text="X", fg="#ff5555")
-            else:  # Last move was O
+                self.xState[index] = 1
+            else:  # O turn
                 self.buttons[index].config(text="O", fg="#55aaff")
+                self.zState[index] = 1
 
             # Check Win
-            result = self.game.checkWin()
+            result = main.checkWin(self.xState, self.zState)
             if result == 1:
                 self.score_x += 1
                 messagebox.showinfo("🎉 Winner", "Player X Wins! 🎉")
@@ -87,10 +83,15 @@ class TicTacToeGUI:
                 self.reset_board(update_score=True)
                 return
 
+            # Change Turn
+            self.turn = 1 - self.turn
+
     def reset_board(self, update_score=False):
         for btn in self.buttons:
             btn.config(text="", bg="#2e2e44")
-        self.game = TicTacToe()
+        self.xState = [0] * 9
+        self.zState = [0] * 9
+        self.turn = 1
         if update_score:
             self.score_label.config(text=self.get_score_text())
 
